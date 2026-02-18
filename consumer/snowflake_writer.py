@@ -1,4 +1,5 @@
 import snowflake.connector
+import json
 import os
 from dotenv import load_dotenv
 
@@ -14,23 +15,21 @@ def get_connection():
         schema=os.getenv("SNOWFLAKE_SCHEMA"),
     )
 
-def insert_order(order):
+def insert_event(raw_payload, partition, offset):
     conn = get_connection()
     cursor = conn.cursor()
 
     try:
-        cursor.execute(
+        insert_query ="""
+            INSERT INTO raw_order_events
+            (raw_payload, kafka_partition, kafka_offset)
+            SELECT PARSE_JSON(%s), %s, %s
             """
-            INSERT INTO raw_orders_stream (order_id, city, amount, timestamp)
-            VALUES (%s, %s, %s, %s)
-            """,
-            (
-                order["order_id"],
-                order["city"],
-                order["amount"],
-                order["timestamp"],
-            ),
+        cursor.execute(
+            insert_query,
+            (json.dumps(raw_payload), partition, offset)
         )
+        conn.commit()
     finally:
         cursor.close()
         conn.close()
