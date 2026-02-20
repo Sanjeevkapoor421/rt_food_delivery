@@ -6,4 +6,4 @@ SELECT
     kafka_partition,
     kafka_offset,
     ingestion_timestamp
-FROM {{ source('raw','raw_order_events') }}
+FROM {{ source('raw','raw_order') }}
