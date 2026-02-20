@@ -1,0 +1,8 @@
+models:
+  - name: stg_raw_order__events
+    columns:
+      - name: order_id
+        description: checking for not null rows for demo purpose
+        data_tests:
+          - not_null 
+          
