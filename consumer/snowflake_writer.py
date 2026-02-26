@@ -21,7 +21,7 @@ def insert_event(raw_payload, partition, offset):
 
     try:
         insert_query ="""
-            INSERT INTO raw_order_events
+            INSERT INTO raw_order
             (raw_payload, kafka_partition, kafka_offset)
             SELECT PARSE_JSON(%s), %s, %s
             """

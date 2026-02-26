@@ -12,7 +12,8 @@ fake = Faker()
 TOPIC = "order_events"
 
 producer = KafkaProducer(
-    bootstrap_servers="localhost:9092",
+    bootstrap_servers="kafka:29092",
+    api_version=(3, 7, 0),
     value_serializer=lambda v: json.dumps(v).encode("utf-8")
 )
 
@@ -132,6 +133,6 @@ def simulate_lifecycle():
 
 
 if __name__ == "__main__":
-    while True:
+    for _ in range(10):
         simulate_lifecycle()
-        time.sleep(random.randint(2, 5))
+        time.sleep(random.randint(1, 2))

@@ -8,10 +8,11 @@ logging.basicConfig(level=logging.INFO)
 
 consumer = KafkaConsumer(
     "order_events",
-    bootstrap_servers="localhost:9092",
+    bootstrap_servers="kafka:29092",
+    api_version=(3, 7, 0),
     auto_offset_reset="earliest",
     enable_auto_commit=True,
-    group_id="order-event-group",
+    group_id="order-events",
     value_deserializer=lambda x: json.loads(x.decode("utf-8"))
 )
 logging.info("Consumer started... Waiting for messages.")

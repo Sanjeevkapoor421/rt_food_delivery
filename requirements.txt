@@ -3,3 +3,4 @@ faker
 python-dotenv
 snowflake-connector-python
 python-dotenv
+dbt-snowflake
